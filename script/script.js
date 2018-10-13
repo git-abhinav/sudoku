@@ -1,14 +1,20 @@
 var mainArr = new Array(9);
 for (var i = 0; i < 9; i++)
   mainArr[i] = new Array(9);
-var tempCounter = 1 ;
-for (var i=0;i<9;++i)
-  for(var j=0;j<9;++j)
-  {
-      mainArr[parseInt(i)][parseInt(j)] = "X";
-      document.getElementById(tempCounter).innerHTML = "";
-      tempCounter++;
-  }
+
+
+function startUp()
+{
+  console.log("In startUp");
+  var tempCounter = 1 ;
+  for (var i=0;i<9;++i)
+    for(var j=0;j<9;++j)
+    {
+        mainArr[parseInt(i)][parseInt(j)] = "X";
+        document.getElementById(tempCounter).innerHTML = "";
+        tempCounter++;
+    }
+}
 
 
 
@@ -49,6 +55,17 @@ function check()
       counter++;
     }
   }
+
+  var tempCounter = 1;
+  for (var i=0;i<9;++i)
+    for(var j=0;j<9;++j)
+    {
+        mainArr[parseInt(i)][parseInt(j)] = "X";
+        document.getElementById(tempCounter).innerHTML = "X";
+        tempCounter++;
+    }
+
+
   //sample code
   mainArr[0][0] = 1;
   mainArr[0][3] = 4;
@@ -317,7 +334,7 @@ function constraint2()
 
       if(x=="X" || x=="")
       {
-        console.log(i, j, "th", " is empty");
+
         for(var k=1;k<=9;++k)
         {
           if(!inRow(k, i) && !inColumn(k, j) && !inGrid(k, i, j))
@@ -325,6 +342,7 @@ function constraint2()
             document.getElementById(counter).innerHTML = k;
             mainArr[i][j] = k;
             console.log(k, " added at ", i, j);
+            
           }
         }
       }
