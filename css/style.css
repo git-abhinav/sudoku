@@ -55,7 +55,7 @@ body {
   background-color: black;
   border: none;
   color: #eee;
-  max-width: 150px;
+  max-width: 250px;
   text-align: center;
   font-size: 28px;
   padding: 10px;
@@ -116,5 +116,6 @@ table, th, td {
     border-collapse: collapse;
 }
 th, td {
+    background-color: white;
     padding: 15px;
 }
