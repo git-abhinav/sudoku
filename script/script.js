@@ -1,8 +1,8 @@
 var mainArr = new Array(9);
 for (var i = 0; i < 9; i++)
   mainArr[i] = new Array(9);
-
-
+var prevdata;  // to store the style data of sample button
+var tempstatus = 1;
 function startUp()
 {
   console.log("In startUp");
@@ -12,12 +12,12 @@ function startUp()
     {
         mainArr[parseInt(i)][parseInt(j)] = "X";
         document.getElementById(tempCounter).innerHTML = "";
+        //document.getElementById(tempCounter).style.backgroundColor = rgba(255, 255, 255, 0.8);
         tempCounter++;
     }
+
+  document.getElementById("sampleButton").style.display = prevdata;
 }
-
-
-
 function myFunction(myvar)
 {
     var x = document.createElement("INPUT");
@@ -32,12 +32,23 @@ function myFunction(myvar)
     }
     else
       alert("Please enter number between 1 to 9");
-    //check();
 }
 function clicked()
 {
-  //console.log("Button pressed");
+  console.log("Main process started");
+  document.getElementById("startButton").innerHTML = "Run Again";
+  //alert(toString(document.getElementById("sampleButton").style.display));
+  prevdata = document.getElementById("sampleButton").style.display;
+  document.getElementById("sampleButton").style.display = "none";
+  for(var i=0;i<9;++i)
+    for(var j=0;j<9;++j)
+      if(mainArr[i][j]=="X")
+        tempstatus = 0;
+  if(tempstatus == 1)
+    alert("All Constraints Satisfied");
+  tempstatus = 1;
   constraint2();
+  //check()
 }
 function check()
 {
@@ -66,7 +77,9 @@ function check()
     }
 
 
-  //sample code
+
+
+  //sample code 1
   mainArr[0][0] = 1;
   mainArr[0][3] = 4;
   mainArr[0][4] = 8;
@@ -123,15 +136,65 @@ function check()
   mainArr[8][5] = 2;
   mainArr[8][8] = 4;
 
-  /*
-  var temp = 1;
-  for (var i=0;i<9;++i)
-  {
-    for (var j=0;j<9;++j)
-    {
-      mainArr[i][j] = temp++;
-    }
-  }*/
+
+
+//sample 2
+
+/*
+
+  mainArr[0][3] = 2;
+  mainArr[0][4] = 6;
+  mainArr[0][6] = 7;
+  mainArr[0][8] = 1;
+
+
+  mainArr[1][0] = 6;
+  mainArr[1][1] = 8;
+  mainArr[1][4] = 7;
+  mainArr[1][7] = 9;
+
+
+  mainArr[2][0] = 1;
+  mainArr[2][1] = 9;
+  mainArr[2][5] = 4;
+  mainArr[2][6] = 5;
+
+
+  mainArr[3][0] = 8;
+  mainArr[3][1] = 2;
+  mainArr[3][3] = 1;
+  mainArr[3][7] = 4;
+
+
+  mainArr[4][2] = 4;
+  mainArr[4][3] = 6;
+  mainArr[4][5] = 2;
+  mainArr[4][6] = 9;
+
+
+  mainArr[5][1] = 5;
+  mainArr[5][5] = 3;
+  mainArr[5][7] = 2;
+  mainArr[5][8] = 8;
+
+  mainArr[6][2] = 9;
+  mainArr[6][3] = 3;
+  mainArr[6][7] = 7;
+  mainArr[6][8] = 4;
+
+  mainArr[7][1] = 4;
+  mainArr[7][4] = 5;
+  mainArr[7][7] = 3;
+  mainArr[7][8] = 6;
+
+
+  mainArr[8][0] = 7;
+  mainArr[8][2] = 3;
+  mainArr[8][4] = 1;
+  mainArr[8][5] = 8;
+
+*/
+
 
   counter = 1;
   for(var i=0;i<9;++i)
@@ -142,7 +205,6 @@ function check()
         mainArr[parseInt(i)][parseInt(j)] = parseInt(x);
       document.getElementById(counter).innerHTML = mainArr[i][j];
       counter++;
-
     }
   textdata = '<table style="width:100%">';
   for (var i = 0; i<9 ; ++i)
@@ -153,34 +215,11 @@ function check()
       textdata += "<td>";
       textdata += mainArr[i][j];
       textdata += "</td>";
-      //textdata += "  "
     }
     textdata += "</tr>";
-    //textdata += "<br>";
   }
   textdata += "</table>"
   document.getElementById("bottomMost").innerHTML = textdata;
-  //var set1 = new Set(mainArr[0])
-  //set1.delete("X");
-
-  //var set2 = new Set(mainArr[1][1]);
-  //try set.has function
-
-  //console.log(set1);
-  //console.log(set2);
-}
-function getRow(r)
-{
-  var a = new Array();
-  for (var i=0;i<9;++i)
-    a[i] = mainArr[r][i];
-  return a;
-}
-function getColumn(c)
-{
-  var a = new Array();
-  for(var i=0;i<9;++i)
-    a[i] = mainArr[i][c];
 }
 function constraint1()
 {
@@ -205,6 +244,7 @@ function constraint1()
           {
             document.getElementById(counter).innerHTML = k;
             mainArr[i][j] = k;
+          //  break;
           }
         }
       }
@@ -304,52 +344,168 @@ function inGrid(k, r, c)
 }
 function constraint2()
 {
-  /*
-  for(var i=1;i<=9;++i)
-    if(inRow(i, 0))
-      console.log(i," is present in row 0 ");
-
-  for(var i=1;i<=9;++i)
-      if(inColumn(i, 0))
-        console.log(i," is present in column 0 ");
-  for(var i=0;i<9;++i)
-  {
-    for(var j=0;j<9;++j)
-    {
-      console.log("Indexes : ",i, j);
-      inGrid(1, i, j);
-      console.log("\n");
-    }
-  }
-  */
-
-  console.log("In main function");
+  //console.log("In main function");
   var counter = 1;
   var x;
+  var t = new Array();
   for (var i=0;i<9;++i)
-  {
     for(var j=0;j<9;++j)
     {
-      x = document.getElementById(counter).innerHTML
-
+      x = document.getElementById(counter).innerHTML;
       if(x=="X" || x=="")
       {
-
         for(var k=1;k<=9;++k)
         {
-          if(!inRow(k, i) && !inColumn(k, j) && !inGrid(k, i, j))
+          //this is for row
+          if (i<=2)
+          {
+             if(i==0)
+             {
+               t[0] = 1;
+               t[1] = 2;
+             }
+             else if(i==1) {
+               t[0] = 0;
+               t[1] = 2;
+             }
+             else {
+               t[0] = 0;
+               t[1] = 1;
+             }
+          }
+          else if(i>=3&&i<=5)
+          {
+            if(i==3)
+            {
+              t[0] = 4;
+              t[1] = 5;
+            }
+            else if(i==4) {
+              t[0] = 3;
+              t[1] = 5;
+            }
+            else {
+              t[0] = 3;
+              t[1] = 4;
+            }
+          }
+          else
+          {
+            if(i==6)  {
+              t[0] = 7;
+              t[1] = 8;
+            }
+            else if(i==7) {
+              t[0] = 6;
+              t[1] = 8;
+            }
+            else {
+              t[0] = 6;
+              t[1] = 7;
+            }
+          }
+
+          //this is for columns
+          var t2 = new Array();
+          if (j<=2)
+          {
+             if(j==0)
+             {
+               t2[0] = 1;
+               t2[1] = 2;
+             }
+             else if(j==1) {
+               t2[0] = 0;
+               t2[1] = 2;
+             }
+             else {
+               t2[0] = 0;
+               t2[1] = 1;
+             }
+          }
+          else if(2>=3&&2<=5)
+          {
+            if(j==3)
+            {
+              t2[0] = 4;
+              t2[1] = 5;
+            }
+            else if(j==4) {
+              t2[0] = 3;
+              t2[1] = 5;
+            }
+            else {
+              t2[0] = 3;
+              t2[1] = 4;
+            }
+          }
+          else
+          {
+            if(j==6)  {
+              t2[0] = 7;
+              t2[1] = 8;
+            }
+            else if(j==7) {
+              t2[0] = 6;
+              t2[1] = 8;
+            }
+            else {
+              t2[0] = 6;
+              t2[1] = 7;
+            }
+          }
+
+
+          if(
+          (
+             !inRow(k, i)
+          && !inColumn(k, j)
+          && !inGrid(k, i, j)
+          )
+
+
+          &&
+
+          (
+            (
+              inRow(k, t[0])
+              &&
+               inRow(k, t[1])
+            )
+
+            ||
+
+            (
+              inColumn(k, t2[0])
+              && inColumn(k, t2[1])
+            )
+
+          )
+
+
+          )
           {
             document.getElementById(counter).innerHTML = k;
             mainArr[i][j] = k;
-            console.log(k, " added at ", i, j);
-            
+            console.log(k, " added at : ", i, j)
+            document.getElementById(counter).style.color = "blue";
+            //break;
           }
         }
       }
       counter++;
     }
-  }
-
-
-
+    counter = 1;
+    for(var i=0;i<9;++i)
+    {
+      for(var j=0;j<9;++j)
+      {
+        x = document.getElementById(counter).innerHTML;
+        if(x == "X" || x == "")
+        {
+          document.getElementById(counter).style.color = "red";
+        }
+        counter++;
+      }
+    }
 }
